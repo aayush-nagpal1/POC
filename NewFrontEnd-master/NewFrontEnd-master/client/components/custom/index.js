@@ -4,15 +4,18 @@ import Sidebar from '../sidebar';
 import ReactLoading from 'react-loading'
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import services from '../../services'
+import Services from '../../services'
 import './style.css';
 import { css } from 'glamor';
+import Balance from '../Balances'
 
 export default class Custom extends React.Component{
     constructor(props){
         super(props);
         this.state={
             username:'',
+            debitData : [],
+            creditData : [],
             cardData : [],
             load: false,
             load1: false,
@@ -23,20 +26,26 @@ export default class Custom extends React.Component{
 
 
 
-    componentWillMount(){
-        var context = this
-            var token = sessionStorage.getItem("token");
-          services.makePaymentCall(token,function (data) {
-            services.offeringCall(token,function (data1) {
-                console.log(data1);
-              context.setState({cardData : data1});
-              setTimeout(function(){
-                context.setState({timer: true,type:data.totalAvailableBalance});
-              }.bind(this),2000)
-            })
-          })
+    componentWillMount() {
+      var token = sessionStorage.getItem("token");
+      Services.totalBalancesCall(token, function(data){
+          this.setState({accSumary : data});
+          console.log(data)
+     }.bind(this),function(err){
+         console.log(err);
+     })
+      Services.creditCall(token, function(data){
+          this.setState({creditData : data.banks});
 
-        }
+     }.bind(this),function(err){
+         console.log(err);
+     })
+      Services.debitCall(token,function(data){
+          this.setState({debitData : data.banks});
+      }.bind(this),function(err){
+          console.log(err);
+      })
+    }
 
     componentDidMount(){
         var username =
@@ -80,6 +89,43 @@ export default class Custom extends React.Component{
                 <Header username = {this.state.username} history = {this.props.history}/>
             <div style = {{display:"flex"}}>
            <Sidebar/>
+           <div className="container">
+           <div><h1>My Transactions</h1></div>
+            <div className="row">
+              <div className="col">
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown button
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+              </div>
+              <div className="col">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="usr" style={{width:'70%'}}/>
+                </div>
+              </div>
+              <div className="col">
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown button
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+              </div>
+              <div className="col">
+                <button type="button" class="btn btn-success">Submit</button>
+              </div>
+            </div>
+          </div>
            
             </div>
             <ToastContainer autoClose={4000} closeButton={false} hideProgressBar={true} transition={Zoom}/>
