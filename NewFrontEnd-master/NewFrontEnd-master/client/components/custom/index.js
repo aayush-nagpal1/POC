@@ -80,61 +80,7 @@ export default class Custom extends React.Component{
                 <Header username = {this.state.username} history = {this.props.history}/>
             <div style = {{display:"flex"}}>
            <Sidebar/>
-           <div style={{backgroundColor:"#f5f6fa",width:'100%',}}>
-            <div className="container">
-                <div id="banner" className="row" >
-                    <img src="images/img-banner.png" id="banner-img"/>
-                    <h4 id="lable">Your payments are moved to !</h4>
-                </div>
-               
-                <div id="bg" className="back_groud_panal">
-                  <div className='row'>
-                    <div className='col-1'/>
-                    <div className='col-6'>
-                        <h5 className='classMsg' id="msg">{this.state.cardData.aer?<p>Are you hoping to get the best possible return on
-                            your hard earned
-                            savings?
-                            Switch to` <strong>LGB - Club
-                            Lloyds Saver Account</strong> and
-                            enjoy a high rate of 0.6%
-                            annual returns on your
-                            savings ! </p>:<p>Save more annually by
-                            Switching to <strong>LBG’s 0%
-                            Purchase and Balance
-                            Transfer</strong>, with a very low
-                            Annual Percentage Rate
-                            of 19.9% !</p>} 
-                        </h5>
-                    </div>
-                    <div className='col-4'>
-                        <div style={{position:'relative'}}>
-                          <img style= {{width: '18vw'}} src="images/ic-card-copy.png" className="lbgcard"/>
-                          <button className='switch-button' style = {{cursor: 'pointer'}} onClick={this.notify.bind(this)}>
-                              <span id="switch-msg">Switch Now</span>
-                              <i id="right-arrow" className='fas fa-arrow-right fa-lg'></i>
-                          </button>
-                        </div>
-                    </div>
-                    <div className = 'col-1'/>
-                  </div>
-                  {/* <div className='inner_banner_1'>
-                        <div className='heading_text' style={{padding:'25px'}}>
-                        <center>
-                          <strong>Additional savings:</strong> You potential savings will be increased {this.state.cardData.savingsOnOffering}% by switching to llyods account.
-                        </center>
-                        </div>
-                  </div> */}
-                  
-
-                       {this.state.cardData.typeLeftOut =='credit'?
-                        <img src = 'images/credit.png' style = {{width: '100%',paddingTop : '25px'}}/>:
-                        <img src = 'images/capture.png' style = {{width: '100%',paddingTop : '25px'}}/>
-                       }
-                  
-                </div>
-
-            </div>
-            </div>
+           
             </div>
             <ToastContainer autoClose={4000} closeButton={false} hideProgressBar={true} transition={Zoom}/>
             </div>:
